@@ -8,6 +8,7 @@ import { PaginationControl } from "@/components/molecules/PaginationControl";
 import { PeopleData, PeopleVariables } from "./types/types";
 import { CharacterCard } from "@/components/molecules/CharacterCard";
 import { Button } from "@/components/atoms/Button";
+import Image from "next/legacy/image";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,8 +78,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-[20px]">
-      <div className="w-[630px]">
+    <main className="flex min-h-screen flex-col items-center justify-between px-24 py-6 gap-[20px]">
+      <Image src={"/svg/logo.svg"} alt={"arrow"} width={100} height={50} />
+      <div className="w-[630px] mt-12">
         <div className="flex justify-between mb-5">
           <SearchForm
             inputSearchTerm={inputSearchTerm}

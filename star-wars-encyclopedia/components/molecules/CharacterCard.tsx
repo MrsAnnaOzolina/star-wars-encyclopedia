@@ -26,9 +26,9 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({
       ></div>
       <div className="relative z-10 p-6 flex flex-col justify-between h-full">
         <div className="text-center mb-4">
-          <div className="text-sm text-gray-300">Character {characterId}</div>
+          <div className="text-sm text-gray-300 mb-2">Character {characterId}</div>
           <div className="text-2xl font-bold text-white">{character.name}</div>
-          <div className="text-lg text-gray-300 mb-2">
+          <div className="text-l text-gray-300 mb-2">
             <span className="capitalize">{character.eye_color}</span> eyes
             {renderDescription()}
           </div>
