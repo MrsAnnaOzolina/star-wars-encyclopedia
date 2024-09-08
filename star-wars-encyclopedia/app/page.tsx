@@ -4,10 +4,10 @@ import { useQuery } from "@apollo/client";
 import { GET_PEOPLE } from "./graphql/queries";
 import { useEffect, useMemo, useState } from "react";
 import { SearchForm } from "@/components/molecules/SearchForm";
-import { SortButton } from "@/components/molecules/SortButton";
 import { PaginationControl } from "@/components/molecules/PaginationControl";
 import { PeopleData, PeopleVariables } from "./types/types";
 import { CharacterCard } from "@/components/molecules/CharacterCard";
+import { Button } from "@/components/atoms/Button";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,19 +77,21 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-[20px] ">
-      <div className="max-w-[630px]">
-        <div className="flex justify-between mb-8">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-[20px]">
+      <div className="w-[630px]">
+        <div className="flex justify-between mb-5">
           <SearchForm
             inputSearchTerm={inputSearchTerm}
             setInputSearchTerm={setInputSearchTerm}
             handleSearch={handleSearch}
             handleClearSearch={handleClearSearch}
           />
-          <SortButton
-            sortOrder={sortOrder}
-            handleSort={handleSort}
+          <Button
+            onClick={handleSort}
             disabled={sortedCharacters.length <= 1}
+            sortOrder={sortOrder}
+            isSortButton={true}
+            className="w-[174px] text-yellow/70"
           />
         </div>
         {loading ? (
@@ -100,8 +102,14 @@ export default function Home() {
           </p>
         ) : (
           <div className="flex gap-[20px] flex-wrap justify-center">
-            {sortedCharacters.map((character) => (
-              <CharacterCard key={character.url} character={character} />
+            {sortedCharacters.map((character, index) => (
+              <CharacterCard
+                key={character.url}
+                character={character}
+                className={
+                  index % 2 === 1 ? "border-red-600" : "border-blue-400"
+                }
+              />
             ))}
           </div>
         )}

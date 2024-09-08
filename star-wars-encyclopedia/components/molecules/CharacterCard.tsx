@@ -3,7 +3,10 @@ import { useRouter } from "next/navigation";
 import { Button } from "../atoms/Button";
 import { CharacterCardProps } from "@/app/types/types";
 
-export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
+export const CharacterCard: React.FC<CharacterCardProps> = ({
+  character,
+  className,
+}) => {
   const router = useRouter();
 
   const characterId = character.url.split("/").filter(Boolean).pop();
@@ -18,7 +21,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
   return (
     <div className="relative bg-black p-4 rounded-lg h-[330px] w-[305px]">
       <div
-        className="absolute inset-0 border-8 border-red-600 rounded-lg z-0"
+        className={`absolute inset-0 border-8 rounded-lg z-0 ${className}`}
         style={{ filter: "blur(4px)" }}
       ></div>
       <div className="relative z-10 p-6 flex flex-col justify-between h-full">
