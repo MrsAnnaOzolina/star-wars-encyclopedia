@@ -2,15 +2,14 @@
 
 import { useQuery } from "@apollo/client";
 import { GET_PEOPLE } from "./graphql/queries";
-import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { SearchForm } from "@/components/SearchForm";
 import { SortButton } from "@/components/SortButton";
 import { PaginationControl } from "@/components/PaginationControl";
 import { PeopleData, PeopleVariables } from "./types/types";
+import { CharacterCard } from "@/components/CharacterCard";
 
 export default function Home() {
-  const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [inputSearchTerm, setInputSearchTerm] = useState("");
   const [activeSearchTerm, setActiveSearchTerm] = useState("");
@@ -78,61 +77,40 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-[20px]">
-      <SearchForm
-        inputSearchTerm={inputSearchTerm}
-        setInputSearchTerm={setInputSearchTerm}
-        handleSearch={handleSearch}
-        handleClearSearch={handleClearSearch}
-      />
-      <SortButton
-        sortOrder={sortOrder}
-        handleSort={handleSort}
-        disabled={sortedCharacters.length <= 1}
-      />
-      {loading ? (
-        <p className="text-white">Loading...</p>
-      ) : data?.people.results.length === 0 ? (
-        <p className="text-white">
-          No characters found matching "{activeSearchTerm}".
-        </p>
-      ) : (
-        sortedCharacters.map((character) => {
-          const b = character.url.split("/").filter(Boolean).pop();
-          return (
-            <div key={b} className="border border-white rounded-2xl p-8">
-              <h1>
-                Name: {character.name} {b}
-              </h1>
-              <p>
-                <b>Height: </b>
-                {character.height}
-              </p>
-              <p>
-                <b>Hair color: </b>
-                {character.hair_color}
-              </p>
-              <p>
-                <b>Eye color: </b>
-                {character.eye_color}
-              </p>
-              <button
-                onClick={() => {
-                  router.push(`/character/${b}`);
-                }}
-                className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition duration-300 ease-in-out"
-              >
-                Find out more{" "}
-              </button>
-            </div>
-          );
-        })
-      )}
-      <PaginationControl
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+    <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-[20px] ">
+      <div className="max-w-[630px]">
+        <div className="flex justify-between mb-8">
+          <SearchForm
+            inputSearchTerm={inputSearchTerm}
+            setInputSearchTerm={setInputSearchTerm}
+            handleSearch={handleSearch}
+            handleClearSearch={handleClearSearch}
+          />
+          <SortButton
+            sortOrder={sortOrder}
+            handleSort={handleSort}
+            disabled={sortedCharacters.length <= 1}
+          />
+        </div>
+        {loading ? (
+          <p className="text-white">Loading...</p>
+        ) : data?.people.results.length === 0 ? (
+          <p className="text-white">
+            No characters found matching "{activeSearchTerm}".
+          </p>
+        ) : (
+          <div className="flex gap-[20px] flex-wrap justify-center">
+            {sortedCharacters.map((character) => (
+              <CharacterCard key={character.url} character={character} />
+            ))}
+          </div>
+        )}
+        <PaginationControl
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </main>
   );
 }
