@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Audiowide } from "next/font/google";
 import "../styles/globals.css";
 import { ApolloWrapper } from "./ApolloWrapper";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Audiowide({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export const metadata: Metadata = {
   title: "Star Wars Character Encyclopedia",

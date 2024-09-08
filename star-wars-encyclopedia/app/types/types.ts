@@ -9,6 +9,7 @@ export type Character = {
 
 export type CharacterCardProps = {
   character: Character;
+  className: string;
 };
 
 export type PeopleData = {
