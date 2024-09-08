@@ -3,11 +3,11 @@
 import { useQuery } from "@apollo/client";
 import { GET_PEOPLE } from "./graphql/queries";
 import { useEffect, useMemo, useState } from "react";
-import { SearchForm } from "@/components/SearchForm";
-import { SortButton } from "@/components/SortButton";
-import { PaginationControl } from "@/components/PaginationControl";
+import { SearchForm } from "@/components/molecules/SearchForm";
+import { SortButton } from "@/components/molecules/SortButton";
+import { PaginationControl } from "@/components/molecules/PaginationControl";
 import { PeopleData, PeopleVariables } from "./types/types";
-import { CharacterCard } from "@/components/CharacterCard";
+import { CharacterCard } from "@/components/molecules/CharacterCard";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -105,11 +105,13 @@ export default function Home() {
             ))}
           </div>
         )}
-        <PaginationControl
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+        <div className="flex justify-center">
+          <PaginationControl
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
     </main>
   );
