@@ -7,27 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { SearchForm } from "@/components/SearchForm";
 import { SortButton } from "@/components/SortButton";
 import { PaginationControl } from "@/components/PaginationControl";
-
-interface Character {
-  id: string;
-  name: string;
-  height: string;
-  hair_color: string;
-  eye_color: string;
-  url: string;
-}
-
-interface PeopleData {
-  people: {
-    results: Character[];
-    count: number | undefined;
-  };
-}
-
-interface PeopleVariables {
-  page: number;
-  search: string;
-}
+import { PeopleData, PeopleVariables } from "./types/types";
 
 export default function Home() {
   const router = useRouter();
@@ -35,7 +15,7 @@ export default function Home() {
   const [inputSearchTerm, setInputSearchTerm] = useState("");
   const [activeSearchTerm, setActiveSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
-  const [totalPages, setTotalPages] = useState(0); // New state for total pages
+  const [totalPages, setTotalPages] = useState(0);
 
   const { loading, error, data, refetch } = useQuery<
     PeopleData,
