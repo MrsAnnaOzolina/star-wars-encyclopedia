@@ -91,7 +91,7 @@ export default function Home() {
             disabled={sortedCharacters.length <= 1}
             sortOrder={sortOrder}
             isSortButton={true}
-            className="w-[174px] text-yellow/70"
+            className="w-[200px] text-yellow/70"
           />
         </div>
         {loading ? (

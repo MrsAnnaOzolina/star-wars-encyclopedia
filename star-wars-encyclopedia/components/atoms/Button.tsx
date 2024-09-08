@@ -21,7 +21,7 @@ export const Button: React.FC<UnifiedButtonProps> = ({
     if (isSortButton) {
       return sortOrder === null
         ? "Sort by Name"
-        : `Sort by Name ${sortOrder === "asc" ? "↑" : "↓"}`;
+        : `Sort by Name ${sortOrder === "asc" ? "↓" : "↑"}`;
     }
     return title || "";
   };
