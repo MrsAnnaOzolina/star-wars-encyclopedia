@@ -7,6 +7,10 @@ export type Character = {
   url: string;
 };
 
+export type CharacterCardProps = {
+  character: Character;
+};
+
 export type PeopleData = {
   people: {
     results: Character[];
