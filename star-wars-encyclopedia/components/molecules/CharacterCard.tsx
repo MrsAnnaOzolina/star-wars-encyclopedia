@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "./atoms/Button";
+import { Button } from "../atoms/Button";
 import { CharacterCardProps } from "@/app/types/types";
 
 export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
