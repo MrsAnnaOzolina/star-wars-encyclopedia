@@ -1,13 +1,14 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
-import { GET_PEOPLE } from "./graphql/queries";
+import { GET_PEOPLE } from "./api/graphql/queries";
 import { useEffect, useMemo, useState } from "react";
-import { SearchForm } from "@/components/molecules/SearchForm";
-import { PaginationControl } from "@/components/molecules/PaginationControl";
-import { PeopleData, PeopleVariables } from "./types/types";
-import { CharacterCard } from "@/components/molecules/CharacterCard";
-import { Button } from "@/components/atoms/Button";
+import { SearchForm } from "@/app/components/molecules/SearchForm";
+import { PaginationControl } from "@/app/components/molecules/PaginationControl";
+import { PeopleData, PeopleVariables } from "../types/types";
+import { CharacterCard } from "@/app/components/molecules/CharacterCard";
+import { Button } from "@/app/components/atoms/Button";
+import { ErrorFallback } from "@/app/components/molecules/ErrorFallback";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,11 +78,11 @@ export default function Home() {
     }
   };
 
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <ErrorFallback />;;
 
   return (
-    <>
-      <div className="w-full flex justify-between mb-5">
+    <div className="max-[709px]:flex max-[709px]:flex-col max-[709px]:items-center">
+      <div className="w-full flex justify-between mb-5 max-[709px]:flex-col max-[709px]:max-w-[305px] max-[709px]:gap-3">
         <SearchForm
           inputSearchTerm={inputSearchTerm}
           setInputSearchTerm={setInputSearchTerm}
@@ -93,7 +94,7 @@ export default function Home() {
           disabled={sortedCharacters.length <= 1}
           sortOrder={sortOrder}
           isSortButton={true}
-          className="w-[200px] text-yellow/70"
+          className="w-[200px] text-yellow/70 max-[709px]:w-full"
         />
       </div>
       {loading ? (
@@ -120,6 +121,6 @@ export default function Home() {
           onPageChange={handlePageChange}
         />
       </div>
-    </>
+    </div>
   );
 }
