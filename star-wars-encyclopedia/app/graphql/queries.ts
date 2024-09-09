@@ -55,3 +55,30 @@ export const GET_PEOPLE = gql`
     }
   }
 `;
+
+export const GET_ALL_FILMS = gql`
+  query GetFilmsTitleCharacters($characterId: Int!) {
+    allFilms @rest(type: "FilmsResponse", path: "films/") {
+      results @type(name: "Film") {
+        title
+        characters
+      }
+    }
+  }
+`;
+
+export const GET_SPECIES_BY_ID = gql`
+  query GetSpeciesById($id: ID!) {
+    species(id: $id) @rest(type: "Species", path: "species/{args.id}/") {
+      name
+    }
+  }
+`;
+
+export const GET_PLANET_BY_ID = gql`
+  query GetPlanetById($id: ID!) {
+    planet(id: $id) @rest(type: "Planet", path: "planets/{args.id}/") {
+      name
+    }
+  }
+`;

@@ -8,7 +8,6 @@ import { PaginationControl } from "@/components/molecules/PaginationControl";
 import { PeopleData, PeopleVariables } from "./types/types";
 import { CharacterCard } from "@/components/molecules/CharacterCard";
 import { Button } from "@/components/atoms/Button";
-import Image from "next/legacy/image";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,6 +25,12 @@ export default function Home() {
       search: activeSearchTerm,
     },
   });
+
+  useEffect(() => {
+    if (data?.people?.count) {
+      setTotalPages(Math.ceil(data.people.count / 10));
+    }
+  }, [data?.people?.count]);
 
   const sortedCharacters = useMemo(() => {
     const originalCharacters = data?.people.results ?? [];
@@ -47,6 +52,7 @@ export default function Home() {
     setActiveSearchTerm(inputSearchTerm);
     refetch({ page: 1, search: inputSearchTerm });
   };
+
   const handleClearSearch = () => {
     setInputSearchTerm("");
     setActiveSearchTerm("");
@@ -63,12 +69,6 @@ export default function Home() {
     });
   };
 
-  if (error) return <p>Error: {error.message}</p>;
-  useEffect(() => {
-    if (data?.people?.count) {
-      setTotalPages(Math.ceil(data.people.count / 10));
-    }
-  }, [data?.people?.count]);
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
@@ -77,52 +77,49 @@ export default function Home() {
     }
   };
 
+  if (error) return <p>Error: {error.message}</p>;
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between px-24 py-6 gap-[20px]">
-      <Image src={"/svg/logo.svg"} alt={"arrow"} width={100} height={50} />
-      <div className="w-[630px] mt-12">
-        <div className="flex justify-between mb-5">
-          <SearchForm
-            inputSearchTerm={inputSearchTerm}
-            setInputSearchTerm={setInputSearchTerm}
-            handleSearch={handleSearch}
-            handleClearSearch={handleClearSearch}
-          />
-          <Button
-            onClick={handleSort}
-            disabled={sortedCharacters.length <= 1}
-            sortOrder={sortOrder}
-            isSortButton={true}
-            className="w-[200px] text-yellow/70"
-          />
-        </div>
-        {loading ? (
-          <p className="text-white">Loading...</p>
-        ) : data?.people.results.length === 0 ? (
-          <p className="text-white">
-            No characters found matching "{activeSearchTerm}".
-          </p>
-        ) : (
-          <div className="flex gap-[20px] flex-wrap justify-center">
-            {sortedCharacters.map((character, index) => (
-              <CharacterCard
-                key={character.url}
-                character={character}
-                className={
-                  index % 2 === 1 ? "border-red-600" : "border-blue-400"
-                }
-              />
-            ))}
-          </div>
-        )}
-        <div className="flex justify-center">
-          <PaginationControl
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+    <>
+      <div className="w-full flex justify-between mb-5">
+        <SearchForm
+          inputSearchTerm={inputSearchTerm}
+          setInputSearchTerm={setInputSearchTerm}
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
+        />
+        <Button
+          onClick={handleSort}
+          disabled={sortedCharacters.length <= 1}
+          sortOrder={sortOrder}
+          isSortButton={true}
+          className="w-[200px] text-yellow/70"
+        />
       </div>
-    </main>
+      {loading ? (
+        <p className="text-white">Loading...</p>
+      ) : data?.people.results.length === 0 ? (
+        <p className="text-white">
+          No characters found matching &quot;{activeSearchTerm}&quot;.
+        </p>
+      ) : (
+        <div className="flex gap-5 flex-wrap justify-center">
+          {sortedCharacters.map((character, index) => (
+            <CharacterCard
+              key={character.url}
+              character={character}
+              className={index % 2 === 1 ? "border-red-600" : "border-blue-400"}
+            />
+          ))}
+        </div>
+      )}
+      <div className="flex justify-center">
+        <PaginationControl
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
+    </>
   );
 }
