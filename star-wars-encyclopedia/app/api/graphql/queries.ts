@@ -79,6 +79,8 @@ export const GET_PLANET_BY_ID = gql`
   query GetPlanetById($id: ID!) {
     planet(id: $id) @rest(type: "Planet", path: "planets/{args.id}/") {
       name
+      diameter
+      climate
     }
   }
 `;

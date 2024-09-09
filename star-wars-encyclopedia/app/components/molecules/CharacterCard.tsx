@@ -1,9 +1,14 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "../atoms/Button";
-import { CharacterCardProps } from "@/types/types";
+import { Character } from "@/types";
 
-export const CharacterCard: React.FC<CharacterCardProps> = ({
+type Props = {
+  character: Character;
+  className: string;
+};
+
+export const CharacterCard: React.FC<Props> = ({
   character,
   className,
 }) => {

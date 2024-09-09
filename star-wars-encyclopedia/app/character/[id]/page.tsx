@@ -8,19 +8,14 @@ import {
   GET_SPECIES_BY_ID,
 } from "../../api/graphql/queries";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
-import { filterFilmsByCharacter } from "@/app/components/hooks/useFilterFilmsByCharacter";
-import {
-  FilmsResponse,
-  SpeciesData,
-  CharacterData,
-  PlanetData,
-} from "@/types/types";
+import { filterFilmsByCharacter } from "@/lib/filmUtils";
+import { FilmsResponse, SpeciesData, PlanetData, CharacterData } from "@/types";
 import { useEffect } from "react";
 import Image from "next/legacy/image";
 import { DetailedCharacterProfile } from "@/app/components/molecules/DetailedCharacterProfile";
 import { ErrorFallback } from "@/app/components/molecules/ErrorFallback";
 
-export default function CharacterPage() {
+export default function Page() {
   const params = useParams();
   const { id } = params;
   const router = useRouter();
@@ -38,7 +33,7 @@ export default function CharacterPage() {
   } = useQuery<FilmsResponse>(GET_ALL_FILMS);
   const {
     loading: isSpeciesLoading,
-    error: isError,
+    error: isSpeciesError,
     data: onSpecie,
   } = useQuery<SpeciesData>(GET_SPECIES_BY_ID, {
     variables: {
@@ -47,7 +42,7 @@ export default function CharacterPage() {
   });
   const {
     loading: isPlanetLoading,
-    error: isError1,
+    error: isPlanerError,
     data: planetData,
   } = useQuery<PlanetData>(GET_PLANET_BY_ID, {
     variables: {
@@ -69,13 +64,12 @@ export default function CharacterPage() {
     return <p>Loading...</p>;
   }
 
-  if (error) return <ErrorFallback />;
+  if (isFilmsError || isSpeciesError || isPlanerError) return <ErrorFallback />;
 
   const character = data?.person;
 
   if (!character) return null;
 
-  const planet = planetData?.planet.name;
   const speciesName = onSpecie?.species?.name ?? undefined;
   const filteredFilms = filterFilmsByCharacter(filmsData, id as string);
 
@@ -91,7 +85,7 @@ export default function CharacterPage() {
         character={character}
         filteredFilms={filteredFilms}
         speciesName={speciesName}
-        planet={planet}
+        planet={planetData?.planet}
       />
     </div>
   );
