@@ -17,12 +17,13 @@ import {
 } from "@/app/types/types";
 import { useEffect } from "react";
 import Image from "next/legacy/image";
+import { DetailedCharacterProfile } from "@/components/molecules/DetailedCharacterProfile";
+import { ErrorFallback } from "@/components/molecules/ErrorFallback";
 
 export default function CharacterPage() {
   const params = useParams();
   const { id } = params;
   const router = useRouter();
-
   const searchParams = useSearchParams();
   const species = searchParams.get("species");
   const homeworld = searchParams.get("homeworld");
@@ -30,13 +31,11 @@ export default function CharacterPage() {
   const { loading, error, data } = useQuery<CharacterData>(GET_CHARACTER, {
     variables: { id },
   });
-
   const {
     loading: isFilmsLoading,
     error: isFilmsError,
     data: filmsData,
   } = useQuery<FilmsResponse>(GET_ALL_FILMS);
-
   const {
     loading: isSpeciesLoading,
     error: isError,
@@ -46,7 +45,6 @@ export default function CharacterPage() {
       id: species,
     },
   });
-
   const {
     loading: isPlanetLoading,
     error: isError1,
@@ -71,7 +69,7 @@ export default function CharacterPage() {
     return <p>Loading...</p>;
   }
 
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <ErrorFallback />;
 
   const character = data?.person;
 
@@ -89,45 +87,12 @@ export default function CharacterPage() {
       >
         <Image src={"/svg/arrow.svg"} alt={"arrow"} width={100} height={50} />
       </button>
-      <div className="flex flex-col items-center justify-center">
-        <div className="border border-white rounded-2xl p-8 max-w-md w-full flex flex-col gap-2">
-          <h1 className="text-2xl font-bold mb-4">{character.name}</h1>
-          <p>
-            <b className="underline underline-2 text-yellow">Height:</b>{" "}
-            {character.height} cm
-          </p>
-          <p>
-            <b className="underline underline-2 text-yellow">Hair color:</b>{" "}
-            {character.hair_color}
-          </p>
-          <p>
-            <b className="underline underline-2 text-yellow">Mass:</b>{" "}
-            {character.mass} kg
-          </p>
-          <p>
-            <b className="underline underline-2 text-yellow">Birth year:</b>{" "}
-            {character.birth_year}
-          </p>
-          {filteredFilms.length > 0 && (
-            <p>
-              <b className="underline underline-2 text-yellow">Films:</b>{" "}
-              {filteredFilms.join(", ")}
-            </p>
-          )}
-          {speciesName !== undefined && (
-            <p>
-              <b className="underline underline-2 text-yellow">Species:</b>{" "}
-              {speciesName}
-            </p>
-          )}
-          {planet !== undefined && (
-            <p>
-              <b className="underline underline-2 text-yellow">Planet:</b>{" "}
-              {planet}
-            </p>
-          )}
-        </div>
-      </div>
+      <DetailedCharacterProfile
+        character={character}
+        filteredFilms={filteredFilms}
+        speciesName={speciesName}
+        planet={planet}
+      />
     </div>
   );
 }

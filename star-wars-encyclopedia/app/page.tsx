@@ -8,6 +8,7 @@ import { PaginationControl } from "@/components/molecules/PaginationControl";
 import { PeopleData, PeopleVariables } from "./types/types";
 import { CharacterCard } from "@/components/molecules/CharacterCard";
 import { Button } from "@/components/atoms/Button";
+import { ErrorFallback } from "@/components/molecules/ErrorFallback";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,7 +78,7 @@ export default function Home() {
     }
   };
 
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <ErrorFallback />;;
 
   return (
     <div className="max-[709px]:flex max-[709px]:flex-col max-[709px]:items-center">
