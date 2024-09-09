@@ -81,7 +81,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex justify-between mb-5">
+      <div className="w-full flex justify-between mb-5">
         <SearchForm
           inputSearchTerm={inputSearchTerm}
           setInputSearchTerm={setInputSearchTerm}
@@ -103,7 +103,7 @@ export default function Home() {
           No characters found matching &quot;{activeSearchTerm}&quot;.
         </p>
       ) : (
-        <div className="flex gap-[20px] flex-wrap justify-center">
+        <div className="flex gap-5 flex-wrap justify-center">
           {sortedCharacters.map((character, index) => (
             <CharacterCard
               key={character.url}
