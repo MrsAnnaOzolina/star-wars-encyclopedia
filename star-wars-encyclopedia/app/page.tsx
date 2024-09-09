@@ -78,51 +78,46 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between px-24 py-6 gap-[20px]">
-      <Image src={"/svg/logo.svg"} alt={"arrow"} width={100} height={50} />
-      <div className="w-[630px] mt-12">
-        <div className="flex justify-between mb-5">
-          <SearchForm
-            inputSearchTerm={inputSearchTerm}
-            setInputSearchTerm={setInputSearchTerm}
-            handleSearch={handleSearch}
-            handleClearSearch={handleClearSearch}
-          />
-          <Button
-            onClick={handleSort}
-            disabled={sortedCharacters.length <= 1}
-            sortOrder={sortOrder}
-            isSortButton={true}
-            className="w-[200px] text-yellow/70"
-          />
-        </div>
-        {loading ? (
-          <p className="text-white">Loading...</p>
-        ) : data?.people.results.length === 0 ? (
-          <p className="text-white">
-            No characters found matching "{activeSearchTerm}".
-          </p>
-        ) : (
-          <div className="flex gap-[20px] flex-wrap justify-center">
-            {sortedCharacters.map((character, index) => (
-              <CharacterCard
-                key={character.url}
-                character={character}
-                className={
-                  index % 2 === 1 ? "border-red-600" : "border-blue-400"
-                }
-              />
-            ))}
-          </div>
-        )}
-        <div className="flex justify-center">
-          <PaginationControl
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+    <>
+      <div className="flex justify-between mb-5">
+        <SearchForm
+          inputSearchTerm={inputSearchTerm}
+          setInputSearchTerm={setInputSearchTerm}
+          handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
+        />
+        <Button
+          onClick={handleSort}
+          disabled={sortedCharacters.length <= 1}
+          sortOrder={sortOrder}
+          isSortButton={true}
+          className="w-[200px] text-yellow/70"
+        />
       </div>
-    </main>
+      {loading ? (
+        <p className="text-white">Loading...</p>
+      ) : data?.people.results.length === 0 ? (
+        <p className="text-white">
+          No characters found matching "{activeSearchTerm}".
+        </p>
+      ) : (
+        <div className="flex gap-[20px] flex-wrap justify-center">
+          {sortedCharacters.map((character, index) => (
+            <CharacterCard
+              key={character.url}
+              character={character}
+              className={index % 2 === 1 ? "border-red-600" : "border-blue-400"}
+            />
+          ))}
+        </div>
+      )}
+      <div className="flex justify-center">
+        <PaginationControl
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
+    </>
   );
 }
