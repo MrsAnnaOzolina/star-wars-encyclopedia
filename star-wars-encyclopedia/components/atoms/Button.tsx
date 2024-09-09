@@ -30,7 +30,7 @@ export const Button: React.FC<UnifiedButtonProps> = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`px-6 py-2 border-2 border-yellow/70 rounded-full hover:bg-yellow-400 hover:text-yellow hover:border-yellow transition-colors duration-300 cursor-pointer ${className}`}
+      className={`text-base px-3 sm:px-6 py-2 border-2 border-yellow/70 rounded-full hover:bg-yellow-400 hover:text-yellow hover:border-yellow transition-colors duration-300 cursor-pointer ${className}`}
     >
       {getButtonText()}
     </button>

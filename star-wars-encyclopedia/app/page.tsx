@@ -80,8 +80,8 @@ export default function Home() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <>
-      <div className="w-full flex justify-between mb-5">
+    <div className="max-[709px]:flex max-[709px]:flex-col max-[709px]:items-center">
+      <div className="w-full flex justify-between mb-5 max-[709px]:flex-col max-[709px]:max-w-[305px] max-[709px]:gap-3">
         <SearchForm
           inputSearchTerm={inputSearchTerm}
           setInputSearchTerm={setInputSearchTerm}
@@ -93,7 +93,7 @@ export default function Home() {
           disabled={sortedCharacters.length <= 1}
           sortOrder={sortOrder}
           isSortButton={true}
-          className="w-[200px] text-yellow/70"
+          className="w-[200px] text-yellow/70 max-[709px]:w-full"
         />
       </div>
       {loading ? (
@@ -120,6 +120,6 @@ export default function Home() {
           onPageChange={handlePageChange}
         />
       </div>
-    </>
+    </div>
   );
 }
