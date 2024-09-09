@@ -98,12 +98,13 @@ export default function Home() {
         />
       </div>
       {loading ? (
-        <p className="text-white">Loading...</p>
+        <p className="text-white min-h-screen">Loading...</p>
       ) : data?.people.results.length === 0 ? (
         <p className="text-white">
           No characters found matching &quot;{activeSearchTerm}&quot;.
         </p>
       ) : (
+        <div className="sm:min-h-screen">
         <div className="flex gap-5 flex-wrap justify-center">
           {sortedCharacters.map((character, index) => (
             <CharacterCard
@@ -112,6 +113,7 @@ export default function Home() {
               className={index % 2 === 1 ? "border-red-600" : "border-blue-400"}
             />
           ))}
+        </div>
         </div>
       )}
       <div className="flex justify-center">
