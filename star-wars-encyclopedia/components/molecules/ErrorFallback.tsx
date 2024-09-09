@@ -8,7 +8,7 @@ export const ErrorFallback: React.FC = () => {
         Oops! Something went wrong
       </h2>
       <p className="text-gray-600 mb-4">
-        We're having trouble loading the character information.
+        We&apos;re having trouble loading the character information.
       </p>
       <Button
         title="Try Again"
