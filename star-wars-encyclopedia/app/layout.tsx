@@ -12,6 +12,9 @@ const inter = Audiowide({
 export const metadata: Metadata = {
   title: "Star Wars Character Encyclopedia",
   description: "Find your favourite character",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

@@ -1,13 +1,13 @@
 import React from "react";
 import Image from "next/legacy/image";
 
-interface PaginationControlProps {
+type Props = {
   currentPage: number;
   totalPages: number;
   onPageChange: (newPage: number) => void;
-}
+};
 
-export const PaginationControl: React.FC<PaginationControlProps> = ({
+export const PaginationControl: React.FC<Props> = ({
   currentPage,
   totalPages,
   onPageChange,

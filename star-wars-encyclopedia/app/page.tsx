@@ -5,17 +5,16 @@ import { GET_PEOPLE } from "./api/graphql/queries";
 import { useEffect, useMemo, useState } from "react";
 import { SearchForm } from "@/app/components/molecules/SearchForm";
 import { PaginationControl } from "@/app/components/molecules/PaginationControl";
-import { PeopleData, PeopleVariables } from "../types/types";
 import { CharacterCard } from "@/app/components/molecules/CharacterCard";
 import { Button } from "@/app/components/atoms/Button";
 import { ErrorFallback } from "@/app/components/molecules/ErrorFallback";
+import { PeopleData, PeopleVariables } from "@/app/types";
 
-export default function Home() {
+export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [inputSearchTerm, setInputSearchTerm] = useState("");
-  const [activeSearchTerm, setActiveSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState({ input: "", active: "" });
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
   const { loading, error, data, refetch } = useQuery<
     PeopleData,
@@ -23,7 +22,7 @@ export default function Home() {
   >(GET_PEOPLE, {
     variables: {
       page: currentPage,
-      search: activeSearchTerm,
+      search: searchTerm.active,
     },
   });
 
@@ -50,13 +49,13 @@ export default function Home() {
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setCurrentPage(1);
-    setActiveSearchTerm(inputSearchTerm);
-    refetch({ page: 1, search: inputSearchTerm });
+    setSearchTerm((prev) => ({ ...prev, active: prev.input }));
+
+    refetch({ page: 1, search: searchTerm.input });
   };
 
   const handleClearSearch = () => {
-    setInputSearchTerm("");
-    setActiveSearchTerm("");
+    setSearchTerm({ input: "", active: "" });
     setCurrentPage(1);
     setSortOrder(null);
     refetch({ page: 1, search: "" });
@@ -74,18 +73,20 @@ export default function Home() {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
       setSortOrder(null);
-      refetch({ page: newPage, search: activeSearchTerm });
+      refetch({ page: newPage, search: searchTerm.active });
     }
   };
 
-  if (error) return <ErrorFallback />;;
+  if (error) return <ErrorFallback />;
 
   return (
     <div className="max-[709px]:flex max-[709px]:flex-col max-[709px]:items-center">
-      <div className="w-full flex justify-between mb-5 max-[709px]:flex-col max-[709px]:max-w-[305px] max-[709px]:gap-3">
+      <div className="w-[630px] flex justify-between mb-5 max-[709px]:flex-col max-[709px]:max-w-[305px] max-[709px]:gap-3">
         <SearchForm
-          inputSearchTerm={inputSearchTerm}
-          setInputSearchTerm={setInputSearchTerm}
+          inputSearchTerm={searchTerm.input}
+          setInputSearchTerm={(value) =>
+            setSearchTerm((prev) => ({ ...prev, input: value }))
+          }
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
         />
@@ -98,20 +99,24 @@ export default function Home() {
         />
       </div>
       {loading ? (
-        <p className="text-white">Loading...</p>
+        <p className="text-white min-h-screen">Loading...</p>
       ) : data?.people.results.length === 0 ? (
-        <p className="text-white">
-          No characters found matching &quot;{activeSearchTerm}&quot;.
+        <p className="text-white min-h-[calc(100vh-342px)]">
+          No characters found matching &quot;{searchTerm.active}&quot;.
         </p>
       ) : (
-        <div className="flex gap-5 flex-wrap justify-center">
-          {sortedCharacters.map((character, index) => (
-            <CharacterCard
-              key={character.url}
-              character={character}
-              className={index % 2 === 1 ? "border-red-600" : "border-blue-400"}
-            />
-          ))}
+        <div className="sm:min-h-screen">
+          <div className="flex gap-5 flex-wrap justify-center">
+            {sortedCharacters.map((character, index) => (
+              <CharacterCard
+                key={character.url}
+                character={character}
+                className={
+                  index % 2 === 1 ? "border-red-600" : "border-blue-400"
+                }
+              />
+            ))}
+          </div>
         </div>
       )}
       <div className="flex justify-center">

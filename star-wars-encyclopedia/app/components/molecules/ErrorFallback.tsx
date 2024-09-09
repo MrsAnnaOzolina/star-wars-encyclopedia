@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "../atoms/Button";
 
-export const ErrorFallback: React.FC = () => {
+export const ErrorFallback = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       <h2 className="text-2xl font-bold text-red-500 mb-4">

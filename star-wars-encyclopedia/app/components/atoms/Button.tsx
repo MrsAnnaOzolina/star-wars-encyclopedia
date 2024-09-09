@@ -1,15 +1,15 @@
 import React from "react";
 
-interface UnifiedButtonProps {
+type Props = {
   title?: string;
   onClick: () => void;
   disabled?: boolean;
   sortOrder?: "asc" | "desc" | null;
   isSortButton?: boolean;
   className?: string;
-}
+};
 
-export const Button: React.FC<UnifiedButtonProps> = ({
+export const Button: React.FC<Props> = ({
   title,
   onClick,
   disabled = false,

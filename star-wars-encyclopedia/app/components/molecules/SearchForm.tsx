@@ -1,14 +1,14 @@
 import React from "react";
 import Image from "next/legacy/image";
 
-interface SearchFormProps {
+type Props = {
   inputSearchTerm: string;
   setInputSearchTerm: (value: string) => void;
   handleSearch: (event: React.FormEvent<HTMLFormElement>) => void;
   handleClearSearch: () => void;
 }
 
-export const SearchForm: React.FC<SearchFormProps> = ({
+export const SearchForm: React.FC<Props> = ({
   inputSearchTerm,
   setInputSearchTerm,
   handleSearch,
