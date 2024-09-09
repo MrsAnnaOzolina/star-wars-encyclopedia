@@ -16,6 +16,9 @@ const config: Config = {
       colors: {
         yellow: "#ffe81f",
       },
+      screens: {
+        md: "840px",
+      },
     },
   },
   plugins: [],
