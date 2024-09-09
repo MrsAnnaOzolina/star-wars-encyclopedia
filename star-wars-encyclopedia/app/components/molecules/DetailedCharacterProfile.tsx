@@ -1,5 +1,5 @@
 import React from "react";
-import { CharacterDetails } from "@/app/types/types";
+import { CharacterDetails } from "@/types/types";
 
 interface Props {
   character: CharacterDetails;

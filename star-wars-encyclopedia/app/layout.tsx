@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Audiowide } from "next/font/google";
 import "../styles/globals.css";
-import { ApolloWrapper } from "./ApolloWrapper";
+import { ApolloWrapper } from "../lib/ApolloWrapper";
 import Image from "next/legacy/image";
 
 const inter = Audiowide({

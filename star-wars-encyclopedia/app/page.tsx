@@ -1,14 +1,14 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
-import { GET_PEOPLE } from "./graphql/queries";
+import { GET_PEOPLE } from "./api/graphql/queries";
 import { useEffect, useMemo, useState } from "react";
-import { SearchForm } from "@/components/molecules/SearchForm";
-import { PaginationControl } from "@/components/molecules/PaginationControl";
-import { PeopleData, PeopleVariables } from "./types/types";
-import { CharacterCard } from "@/components/molecules/CharacterCard";
-import { Button } from "@/components/atoms/Button";
-import { ErrorFallback } from "@/components/molecules/ErrorFallback";
+import { SearchForm } from "@/app/components/molecules/SearchForm";
+import { PaginationControl } from "@/app/components/molecules/PaginationControl";
+import { PeopleData, PeopleVariables } from "../types/types";
+import { CharacterCard } from "@/app/components/molecules/CharacterCard";
+import { Button } from "@/app/components/atoms/Button";
+import { ErrorFallback } from "@/app/components/molecules/ErrorFallback";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);

@@ -6,19 +6,19 @@ import {
   GET_CHARACTER,
   GET_PLANET_BY_ID,
   GET_SPECIES_BY_ID,
-} from "../../graphql/queries";
+} from "../../api/graphql/queries";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
-import { filterFilmsByCharacter } from "@/components/hooks/useFilterFilmsByCharacter";
+import { filterFilmsByCharacter } from "@/app/components/hooks/useFilterFilmsByCharacter";
 import {
   FilmsResponse,
   SpeciesData,
   CharacterData,
   PlanetData,
-} from "@/app/types/types";
+} from "@/types/types";
 import { useEffect } from "react";
 import Image from "next/legacy/image";
-import { DetailedCharacterProfile } from "@/components/molecules/DetailedCharacterProfile";
-import { ErrorFallback } from "@/components/molecules/ErrorFallback";
+import { DetailedCharacterProfile } from "@/app/components/molecules/DetailedCharacterProfile";
+import { ErrorFallback } from "@/app/components/molecules/ErrorFallback";
 
 export default function CharacterPage() {
   const params = useParams();
