@@ -1,6 +1,6 @@
 import React from "react";
-import { CharacterDetails } from "@/types/character";
-import { Planet } from "@/types";
+import { CharacterDetails } from "@/app/types/character";
+import { Planet } from "@/app/types";
 
 type Props = {
   character: CharacterDetails;

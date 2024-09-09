@@ -8,7 +8,7 @@ import { PaginationControl } from "@/app/components/molecules/PaginationControl"
 import { CharacterCard } from "@/app/components/molecules/CharacterCard";
 import { Button } from "@/app/components/atoms/Button";
 import { ErrorFallback } from "@/app/components/molecules/ErrorFallback";
-import { PeopleData, PeopleVariables } from "@/types";
+import { PeopleData, PeopleVariables } from "@/app/types";
 
 export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,4 +1,4 @@
-import { FilmsResponse } from "@/types";
+import { FilmsResponse } from "@/app/types";
 
 export const filterFilmsByCharacter = (filmsData: FilmsResponse | undefined, characterId: string): string[] => {
   if (!filmsData?.allFilms?.results) {

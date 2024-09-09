@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "../atoms/Button";
-import { Character } from "@/types";
+import { Character } from "@/app/types";
 
 type Props = {
   character: Character;

@@ -9,7 +9,7 @@ import {
 } from "../../api/graphql/queries";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { filterFilmsByCharacter } from "@/lib/filmUtils";
-import { FilmsResponse, SpeciesData, PlanetData, CharacterData } from "@/types";
+import { FilmsResponse, SpeciesData, PlanetData, CharacterData } from "@/app/types";
 import { useEffect } from "react";
 import Image from "next/legacy/image";
 import { DetailedCharacterProfile } from "@/app/components/molecules/DetailedCharacterProfile";
