@@ -33,7 +33,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
             ×
           </button>
         )}
-        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 hover:opacity-80 transition-opacity">
+        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pt-[5px] hover:opacity-80 transition-opacity ">
           <Image src="/svg/lupa.svg" alt="Search" width={18} height={18} />
         </div>
       </div>

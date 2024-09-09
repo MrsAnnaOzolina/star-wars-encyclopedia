@@ -8,7 +8,6 @@ import { PaginationControl } from "@/components/molecules/PaginationControl";
 import { PeopleData, PeopleVariables } from "./types/types";
 import { CharacterCard } from "@/components/molecules/CharacterCard";
 import { Button } from "@/components/atoms/Button";
-import Image from "next/legacy/image";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,6 +25,12 @@ export default function Home() {
       search: activeSearchTerm,
     },
   });
+
+  useEffect(() => {
+    if (data?.people?.count) {
+      setTotalPages(Math.ceil(data.people.count / 10));
+    }
+  }, [data?.people?.count]);
 
   const sortedCharacters = useMemo(() => {
     const originalCharacters = data?.people.results ?? [];
@@ -47,6 +52,7 @@ export default function Home() {
     setActiveSearchTerm(inputSearchTerm);
     refetch({ page: 1, search: inputSearchTerm });
   };
+
   const handleClearSearch = () => {
     setInputSearchTerm("");
     setActiveSearchTerm("");
@@ -63,12 +69,6 @@ export default function Home() {
     });
   };
 
-  if (error) return <p>Error: {error.message}</p>;
-  useEffect(() => {
-    if (data?.people?.count) {
-      setTotalPages(Math.ceil(data.people.count / 10));
-    }
-  }, [data?.people?.count]);
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
@@ -76,6 +76,8 @@ export default function Home() {
       refetch({ page: newPage, search: activeSearchTerm });
     }
   };
+
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <>
@@ -98,7 +100,7 @@ export default function Home() {
         <p className="text-white">Loading...</p>
       ) : data?.people.results.length === 0 ? (
         <p className="text-white">
-          No characters found matching "{activeSearchTerm}".
+          No characters found matching &quot;{activeSearchTerm}&quot;.
         </p>
       ) : (
         <div className="flex gap-[20px] flex-wrap justify-center">

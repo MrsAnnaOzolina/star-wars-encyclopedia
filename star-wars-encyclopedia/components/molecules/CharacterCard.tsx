@@ -10,12 +10,37 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({
   const router = useRouter();
 
   const characterId = character.url.split("/").filter(Boolean).pop();
+  const characterSpecies = character.species.length === 1 ? character.species[0].split("/").filter(Boolean).pop() : null;
+
+  const characterHomeworld = character.homeworld.split("/").filter(Boolean).pop(); 
+
 
   const renderDescription = () => {
     if (character.hair_color && character.hair_color.toLowerCase() !== "n/a") {
       return ` with ${character.hair_color} hair`;
     }
     return "";
+  };
+
+
+  const handleClick = () => {
+    let url = `/character/${characterId}`;
+    const params = new URLSearchParams();
+
+    if (characterSpecies !== null && characterSpecies !== undefined) {
+      params.append('species', characterSpecies);
+    }
+
+    if (characterHomeworld !== null && characterHomeworld !== undefined) {
+      params.append('homeworld', characterHomeworld);
+    }
+
+    const queryString = params.toString();
+    if (queryString) {
+      url += `?${queryString}`;
+    }
+
+    router.push(url);
   };
 
   return (
@@ -42,7 +67,9 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({
         <div className="flex justify-center">
           <Button
             title={"Explore more"}
-            onClick={() => router.push(`/character/${characterId}`)}
+            onClick={handleClick}
+            // onClick={() => router.push(`/character/${characterId}&species=${characterSpecies}?homewolrd=${characterHomeworld}`)}
+            className="text-whitw/90"
           />
         </div>
       </div>
